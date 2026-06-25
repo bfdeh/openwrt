@@ -556,6 +556,18 @@ define U-Boot/mt7981_netis_eap930-v1
   DEPENDS:=+trusted-firmware-a-mt7981-spim-nand-ddr3
 endef
 
+define U-Boot/mt7981_netis_nr109gpev2
+  NAME:=netis NR109GPE V2
+  BUILD_SUBTARGET:=filogic
+  BUILD_DEVICES:=netis_nr109gpev2
+  UBOOT_CONFIG:=mt7981_netis_nr109gpev2
+  UBOOT_IMAGE:=u-boot.fip
+  BL2_BOOTDEV:=spim-nand
+  BL2_SOC:=mt7981
+  BL2_DDRTYPE:=ddr3
+  DEPENDS:=+trusted-firmware-a-mt7981-spim-nand-ddr3
+endef
+
 define U-Boot/mt7981_netis_nx30v2
   NAME:=netis NX30 V2
   BUILD_SUBTARGET:=filogic
@@ -1315,6 +1327,7 @@ UBOOT_TARGETS := \
 	mt7981_konka_komi-a31 \
 	mt7981_netcore_n30pro \
 	mt7981_netis_eap930-v1 \
+	mt7981_netis_nr109gpev2 \
 	mt7981_netis_nx30v2 \
 	mt7981_netis_nx31 \
 	mt7981_netis_nx32u \
