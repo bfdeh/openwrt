@@ -2718,6 +2718,28 @@ define Device/netcore_n30-pro
 endef
 TARGET_DEVICES += netcore_n30-pro
 
+define Device/netcore_n30-pro-nmbm
+  DEVICE_VENDOR := Netcore
+  DEVICE_MODEL := N30 Pro
+  DEVICE_VARIANT := NMBM
+  DEVICE_DTS := mt7981b-netcore-n30-pro-nmbm
+  DEVICE_DTS_DIR := ../dts
+  DEVICE_DTC_FLAGS := --pad 4096
+  DEVICE_DTS_LOADADDR := 0x43f00000
+  DEVICE_PACKAGES := kmod-mt7915e kmod-mt7981-firmware mt7981-wo-firmware \
+	kmod-usb3 kmod-usb-ledtrig-usbport
+  KERNEL_LOADADDR := 0x44000000
+  KERNEL := kernel-bin | libdeflate-gzip
+  KERNEL_IN_UBI := 1
+  IMAGES := sysupgrade.itb
+  IMAGE_SIZE := 117248k
+  IMAGE/sysupgrade.itb := append-kernel | fit gzip $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb external-with-rootfs | pad-rootfs | append-metadata
+  SUPPORTED_DEVICES := netcore,n30-pro-nmbm
+  DEVICE_COMPAT_VERSION := 2.0
+  DEVICE_COMPAT_MESSAGE := Requires NMBM-enabled bootloader and valid existing NMBM tables. Do not force-upgrade from the raw-NAND layout.
+endef
+TARGET_DEVICES += netcore_n30-pro-nmbm
+
 define Device/netcore_n60
   DEVICE_VENDOR := Netcore
   DEVICE_MODEL := N60

@@ -176,6 +176,7 @@ platform_do_upgrade() {
 	nokia,ea0326gmp|\
 	openwrt,one|\
 	netcore,n30-pro|\
+	netcore,n30-pro-nmbm|\
 	netcore,n60|\
 	netcore,n60-pro|\
 	qihoo,360t7|\

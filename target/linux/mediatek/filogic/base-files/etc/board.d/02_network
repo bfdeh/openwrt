@@ -86,6 +86,7 @@ mediatek_setup_interfaces()
 	jdcloud,re-cp-03|\
 	mediatek,mt7981-rfb|\
 	netcore,n30-pro|\
+	netcore,n30-pro-nmbm|\
 	netcore,n60|\
 	netcore,n60-pro|\
 	nradio,c8-668gl|\

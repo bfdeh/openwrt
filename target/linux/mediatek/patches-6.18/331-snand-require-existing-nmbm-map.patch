@@ -1,0 +1,31 @@
+From: DevilSmove <3363025686@qq.com>
+Subject: [PATCH] mtd: spinand: stop probing when required NMBM attach fails
+
+A device declaring mediatek,nmbm uses logical offsets from the NMBM
+mapping. Registering its raw NAND partitions after an attach failure can
+expose different offsets and permit writes to unrelated physical blocks.
+
+Keep the existing behavior for devices not declaring NMBM, but fail the
+probe before registering partitions when a required map cannot be loaded.
+
+Signed-off-by: DevilSmove <3363025686@qq.com>
+---
+--- a/drivers/mtd/nand/spi/core.c
++++ b/drivers/mtd/nand/spi/core.c
+@@ -1675,7 +1675,15 @@
+ 	if (ret)
+ 		return ret;
+ 
+-	mtk_bmt_attach(mtd);
++	ret = mtk_bmt_attach(mtd);
++	if (ret && of_property_read_bool(mtd_get_of_node(mtd),
++					 "mediatek,nmbm")) {
++		dev_err(&mem->spi->dev,
++			"Required NMBM attach failed (%d); refusing raw MTD fallback\n",
++			ret);
++		goto err_spinand_cleanup;
++	}
++
+ 	ret = mtd_device_register(mtd, NULL, 0);
+ 	if (ret)
+ 		goto err_spinand_cleanup;
